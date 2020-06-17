@@ -2,7 +2,6 @@
   "variables" : {
     "accesskey": "{{env `AWS_ACCESS_KEY_ID`}}",
     "secretkey": "{{env `AWS_SECRET_ACCESS_KEY`}}"
-
 },
   
   "builders": [
@@ -11,18 +10,19 @@
           "type": "amazon-ebs",
           "source_ami": "ami-085925f297f89fce1",
           "region": "us-east-1",
-          "secret_key": "{{user 'secreykey}}",
-          "access_key": "{{user, 'accesskey}}",
+          "secret_key": "{{user `secretkey`}}",
+          "access_key": "{{user `accesskey`}}",
           "ssh_username": "ubuntu",
           "instance_type": "t2.medium",
           "ami_name": "packer-image-{{timestamp}}"
       
       }
     ],
+
     "provisioners": [
       {
             "type": "shell",
-            "inline": ["sudo apt-get update", "sudo apt-get install git tree -y"]
+            "inline": ["sudo apt-get update", "sudo apt-get install apache2 -y"]
       }
     ]
 }
